@@ -1,16 +1,5 @@
+import {fileToArrayOfString} from '../utility.js';
 import * as fs from 'fs';
-
-const file = fs.readFile('./input.txt', (err, data) => {
-    if (err) console.log('err reading file', err);
-    let inputs = data.toString().split('\n');
-    //part 1
-    let part1 = inputs.reduce((acc, each) => acc + getFuelRequirement(Number(each)), 0);
-    console.log('part1', part1);
-
-    //part 2
-    let part2 = inputs.reduce((acc, each) => acc + recursiveFuelRequirement(each), 0);
-    console.log('part2', part2);
-});
 
 //part 1
 const getFuelRequirement = (input) => {
@@ -26,6 +15,13 @@ const recursiveFuelRequirement = input => {
     return fuel + recursiveFuelRequirement(fuel);
 }
 
+let inputs = fileToArrayOfString(process.cwd()+'/input.txt', '\n');
+let part1 = inputs.reduce((acc, each) => acc + getFuelRequirement(Number(each)), 0);
+console.log('part1', part1);
+let part2 = inputs.reduce((acc, each) => acc + recursiveFuelRequirement(each), 0);
+console.log('part2', part2);
+
+//test
 console.log('mass 12, expect 2', getFuelRequirement(12));
 console.log('mass 14, expect 2', getFuelRequirement(14));
 console.log('mass 1969, expect 654', getFuelRequirement(1969));
